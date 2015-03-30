@@ -18,7 +18,7 @@ namespace Simple_Ajax_PagedList_And_Search_Mvc5
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer<ApplicationDbContext>(new DbInit());
+         //   Database.SetInitializer<ApplicationDbContext>(new DbInit());
         }
     }
 }

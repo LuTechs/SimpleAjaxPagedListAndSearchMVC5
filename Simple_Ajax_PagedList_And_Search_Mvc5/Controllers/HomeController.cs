@@ -10,7 +10,7 @@ namespace Simple_Ajax_PagedList_And_Search_Mvc5.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string currentFilter, string searchString, int page = 1)
+        public ActionResult Index(string searchString, string sortOption, int page = 1)
         {
             int pageSize = 10;
 
@@ -22,7 +22,35 @@ namespace Simple_Ajax_PagedList_And_Search_Mvc5.Controllers
             {
                 products = dbContext.Products.Where(p => p.Name.ToLower().Contains(searchString));
             }
-            products = products.OrderBy(p => p.Id);
+            switch (sortOption)
+            {
+                case "name_acs":
+                    products = products.OrderBy(p => p.Name);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "price_acs":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+
+                case "qty_acs":
+                    products = products.OrderBy(p => p.Qty);
+                    break;
+                case "qty_desc":
+                    products = products.OrderByDescending(p => p.Qty);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Id);
+                    break;
+
+            }
+
+
+
 
 
             return Request.IsAjaxRequest()
