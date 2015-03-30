@@ -4,12 +4,12 @@ using Simple_Ajax_PagedList_And_Search_Mvc5.Models;
 
 namespace Simple_Ajax_PagedList_And_Search_Mvc5
 {
-    public class DbInit:DropCreateDatabaseAlways<ApplicationDbContext>
+    public class DbInit:CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
             base.Seed(context);
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 context.Products.AddOrUpdate(p => p.Id, new Product
                 {
