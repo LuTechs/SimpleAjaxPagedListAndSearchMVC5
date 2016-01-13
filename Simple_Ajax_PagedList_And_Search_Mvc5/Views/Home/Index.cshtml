@@ -20,10 +20,20 @@
 {
 
     <script type="text/javascript">
+        // Adding popstate event listener to handle browser back button  
+        window.addEventListener("popstate", function (e) {
+            $.ajax({
+                url: location.href,
+                success: function (result) {
+                    $('#ProductList').html(result);
+                }
+            });
+        });
+
         function ChangeUrl(page, url) {
             if (typeof (history.pushState) != "undefined") {
                 var obj = { Page: page, Url: url };
-                history.pushState(obj, obj.Page, obj.Url);
+                history.pushState(null, obj.Page, obj.Url);
             } else {
                 alert("Browser does not support HTML5.");
             }
@@ -97,59 +107,58 @@
                 console.log(currentSortOption);
                 var sort;
                 switch (currentSortOption) {
-                    case "name_acs":
-                        sort = 'sortOption=name_desc';
-                        break;
-                    case "name_desc":
-                        sort = 'sortOption=name_acs';
-                        break;
-                    case "price_acs":
-                        sort = 'sortOption=price_desc';
-                        break;
-                    case "price_desc":
-                        sort = 'sortOption=price_acs';
-                        break;
-                    case "qty_acs":
-                        sort = 'sortOption=qty_desc';
-                        break;
-                    case "qty_desc":
-                        sort = 'sortOption=qty_acs';
-                        break;
-                    default:
-                        sort = '';
-                        break;
+                case "name_acs":
+                    sort = 'sortOption=name_desc';
+                    break;
+                case "name_desc":
+                    sort = 'sortOption=name_acs';
+                    break;
+                case "price_acs":
+                    sort = 'sortOption=price_desc';
+                    break;
+                case "price_desc":
+                    sort = 'sortOption=price_acs';
+                    break;
+                case "qty_acs":
+                    sort = 'sortOption=qty_desc';
+                    break;
+                case "qty_desc":
+                    sort = 'sortOption=qty_acs';
+                    break;
+                default:
+                    sort = '';
+                    break;
                 }
 
 
                 switch (columnToSort) {
-                    case 'Name':
-                        if (currentSortOption != 'name_acs' && currentSortOption != 'name_desc') {
-                            sort = 'sortOption=name_acs';
-                        } 
-                        break;
-                    case 'Price':
-                        if (currentSortOption != 'price_acs' && currentSortOption != 'price_desc') {
-                            sort = 'sortOption=price_acs';
-                        }
-                        break;
-                    case 'Qty':
-                        if (currentSortOption != 'qty_acs' && currentSortOption != 'qty_decs') {
-                            sort = 'sortOption=qty_acs';
-                        }
-                        break;
-                    default:
-                        sort = '';
-                        break;
+                case 'Name':
+                    if (currentSortOption != 'name_acs' && currentSortOption != 'name_desc') {
+                        sort = 'sortOption=name_acs';
+                    }
+                    break;
+                case 'Price':
+                    if (currentSortOption != 'price_acs' && currentSortOption != 'price_desc') {
+                        sort = 'sortOption=price_acs';
+                    }
+                    break;
+                case 'Qty':
+                    if (currentSortOption != 'qty_acs' && currentSortOption != 'qty_decs') {
+                        sort = 'sortOption=qty_acs';
+                    }
+                    break;
+                default:
+                    sort = '';
+                    break;
 
                 }
-                if (sort != ''& searchString!='') {
+                if (sort != '' & searchString != '') {
                     sort = '&' + sort;
                 }
-                var url = '/Home/Index?' + searchString +  sort;
-                console.log(url);
+                var url = '/Home/Index?' + searchString + sort;
                 $.ajax({
                     url: url,
-                    success: function (result) {
+                    success: function(result) {
                         ChangeUrl('index', url);
                         $('#ProductList').html(result);
                     }

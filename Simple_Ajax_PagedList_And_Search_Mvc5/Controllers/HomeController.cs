@@ -50,9 +50,6 @@ namespace Simple_Ajax_PagedList_And_Search_Mvc5.Controllers
             }
 
 
-
-
-
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("ProductList", products.ToPagedList(page, pageSize))
                 : View(products.ToPagedList(page, pageSize));
